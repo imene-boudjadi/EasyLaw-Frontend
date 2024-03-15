@@ -1,13 +1,11 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.btn_Bleu{
+@apply bg-Deep_Blue rounded-md  text-my_whitee font-cairo text-lg shadow-md px-5 py-1 hover:bg-my_yellow hover:text-Deep_Blue
+}
+.btn_Yellow{
+@apply bg-my_yellow text-Deep_Blue font-cairo text-lg shadow-md px-5 py-1 hover:bg-Deep_Blue rounded-md  hover:text-my_whitee
 }
