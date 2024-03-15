@@ -1,0 +1,30 @@
+import React from 'react';
+import law1 from '../Images/law_Icon.png';
+import law2 from '../Images/law2_icon.png';
+import chatbot from '../Images/chatbot_icon.png';
+import mobile_icon from '../Images/mobile_icon.png';
+
+export default function Services() {
+  return (
+    <div className='mt-10'>
+      <h2 className="text-Deep_Blue font-bold font-cairo text-2xl text-center py-2">خدمات الموقع</h2>
+      <div className='flex flex-wrap justify-between'>
+        <ServiceBox image={law1} title='القوانين الاساسية' />
+        <ServiceBox image={law2} title='الاجتهادات القضائية' />
+        <ServiceBox image={chatbot} title='روبوت المحادثة' />
+        <ServiceBox image={mobile_icon} title='اشعارات الهاتف' />
+      </div>
+    </div>
+  );
+}
+
+function ServiceBox({ image, title }) {
+  return (
+    <div className='w-full md:w-1/2 lg:w-1/4 px-4 py-5'>
+      <div className='flex flex-col justify-between bg-white border-2 border-Deep_Blue rounded-md shadow-md p-4'>
+        <img src={image} alt={title} className='mx-auto'/>
+        <p className='text-Dark_Blue font-cairo text-xl text-center mt-4'>{title}</p> 
+      </div>
+    </div>
+  );
+}

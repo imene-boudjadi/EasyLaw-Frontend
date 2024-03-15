@@ -13,7 +13,7 @@ module.exports = {
       current : 'currentColor' ,
       'Dark_Blue': '#001F3F',
       'Deep_Blue':'#0C6291',
-      'light_Blue':'#0C6291',
+      'light_Blue':'#9FC2CC',
       'my_yellow':'#FFDC7A',
       'my_whitee':'#EEEEEE',
      },},
