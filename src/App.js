@@ -4,6 +4,7 @@ import HomePage from './Pages/homePage'
 import NewsPage from './Pages/newsPage'
 import AidePage from './Pages/aidePage'
 import OffresPage from './Pages/offresPage'
+import DetailNews from './Pages/detailPage'
 
 
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/Aide' element={<AidePage/>}/>
+          <Route path="/News/DetailNews/:idNews" element={<DetailNews />} />
           <Route path='/News' element={<NewsPage/>}/>
           <Route path='/Offres' element={<OffresPage/>}/>
         </Routes>
