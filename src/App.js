@@ -17,13 +17,16 @@ import JrisprudenceClassification from "./Pages/JrisprudenceClassification"
 import ScrapingTextJuridique from "./Pages/ScrapingTextJuridique"
 import IndexNews from "./Pages/IndexNews"
 import DetailFacture from './Pages/detailFacture'
+import ProfilePage from './Pages/profilePage'; 
+import NotifPage from './Pages/notifPage';
+
 function App() {
   return (
     <div className="App">
- <Router>
+      <Router>
         <Routes>
-          <Route path='/' element={<HomePage/>}/>
-          <Route path='/Aide' element={<AidePage/>}/>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/Aide' element={<AidePage />} />
           <Route path="/News/DetailNews/:idNews" element={<DetailNews />} />
           <Route path='/News' element={<NewsPage/>}/>
           <Route path='/Offres' element={<OffresPage/>}/>
@@ -40,9 +43,11 @@ function App() {
           <Route path='/LawClassification' element={<LawClassification/>}/>
           <Route path='/JrisprudenceClassification' element={<JrisprudenceClassification/>}/>
           <Route path='/DetailFacture' element={<DetailFacture/>}/>
-
+          <Route path='/ProfilePage' element={<ProfilePage />} />
+          <Route path='/NotifPage' element={<NotifPage />} />
         </Routes>
-       </Router>    </div>
+      </Router>
+    </div>
   );
 }
 
