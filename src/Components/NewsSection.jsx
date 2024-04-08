@@ -14,8 +14,8 @@ export default function NewsSection() {
   
     return (
       <div className="flex flex-col justify-between gap-10 my-5">
-        <div className='px-5 py-2 mx-10 flex flex-row justify-between w-1/3 border-2 border-light_Blue rounded-md shadow-md md:ml-auto'> 
-          <input className='font-cairo' placeholder='البحث'/>
+        <div className='px-5 py-2 mx-10 flex flex-row justify-between w-1/3 inputStyle md:ml-auto'> 
+          <input className='font-cairo border-0 outline-none focus:border-0' placeholder='البحث'/>
           <IoMdSearch className='text-Deep_Blue' />
         </div>
   

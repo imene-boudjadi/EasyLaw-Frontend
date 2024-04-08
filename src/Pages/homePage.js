@@ -9,7 +9,7 @@ import Footer from '../Components/footer'
 
 export default function homePage() {
   return (
-   <div>
+   <div className='bg-my_whitee h-screen bg-opacity-5'>
    <Header/> 
    <Menu/>
    <Services/>

@@ -16,6 +16,8 @@ module.exports = {
       'light_Blue':'#9FC2CC',
       'my_yellow':'#FFDC7A',
       'my_whitee':'#EEEEEE',
+      'my_Red':'#FF0707',
+
      },},
   },
   plugins: [],
