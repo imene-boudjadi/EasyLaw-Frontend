@@ -19,6 +19,12 @@ import IndexNews from "./Pages/IndexNews"
 import DetailFacture from './Pages/detailFacture'
 import ProfilePage from './Pages/profilePage'; 
 import NotifPage from './Pages/notifPage';
+import LoginPage from './Pages/loginPage'
+import RegisterPage from './Pages/registerPage'
+import DetailsMahkamaPage from './Pages/detailsMahkamaPage'
+import DetailsMajlissPage from './Pages/detailsMajlissPage'
+import HistoriquesFacturationPage from './Pages/historiquesFacturationPage'
+
 
 function App() {
   return (
@@ -33,6 +39,11 @@ function App() {
           <Route path='/Law' element={<LawPage/>}/>
           <Route path='/Jurisprudence' element={<Jurisprudence/>}/>
           <Route path='/ChatBot' element={<ChatBot/>}/>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/detailsMahkama/:id" element={<DetailsMahkamaPage />} />  
+          <Route path="/detailsMajliss/:id" element={<DetailsMajlissPage />} />
+          <Route path="/historiquesFact" element={<HistoriquesFacturationPage />} />
           {/* administration pages  */}
           <Route path='/GestionUser' element={<GestionUser/>}/>
           <Route path='/ScrapingTextJuridique' element={<ScrapingTextJuridique/>}/>
