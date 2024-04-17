@@ -3,12 +3,16 @@ import { MdNavigateNext } from "react-icons/md";
 import { IoMdSearch } from "react-icons/io";
 
 
-export default function FilterLaw() {
-    const [selectedType, setSelectedType] = useState('');
+export default function FilterLaw({ onSearchTermChange }) {
     
+    const [selectedType, setSelectedType] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+      
     const handleTypeChange = (event) => {
       setSelectedType(event.target.value);
+      onSearchTermChange(event.target.value);
     };
+  
   return (
     <div className='flex flex-col mt-5 mx-10'>
                 
