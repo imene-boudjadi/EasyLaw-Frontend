@@ -25,15 +25,15 @@ export default function ContacterNous() {
               <div className="bg-light_Blue rounded-md shadow-md py-4 px-6 my-4">
                 <div className="flex flex-col mb-4 ">
                   <label htmlFor="email1" className="text-Dark_Blue font-cairo mb-1">البريد الالكتروني</label>
-                  <input id="email1" type="email" className="bg-my_whitee py-2 px-4 rounded-md" />
+                  <input id="email1" type="email" className="inputStyle bg-my_whitee py-2 px-4 rounded-md" />
                 </div>
                 <div className="flex flex-col mb-4">
                   <label htmlFor="email2" className="text-Dark_Blue font-cairo mb-1">رقم الهاتف</label>
-                  <input id="email2" type="email" className="bg-my_whitee py-2 px-4 rounded-md" />
+                  <input id="email2" type="email" className="inputStyle bg-my_whitee py-2 px-4 rounded-md" />
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="email3" className="text-Dark_Blue font-cairo mb-1">الرسالة</label>
-                  <input id="email3" type="email" className="bg-my_whitee py-2 px-4 rounded-md" />
+                  <input id="email3" type="email" className="inputStyle bg-my_whitee py-2 px-4 rounded-md" />
                 </div>
                 <button className='btn_Bleu w-full my-6'>ارسال</button>
               </div>
