@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import MenuPrincipal from '../Components/menuPrincipal3'
 import Header2 from '../Components/header2'
 import UsersTable from '../Components/UsersTable'
@@ -8,12 +8,31 @@ import DeleteConfirm from '../Components/DeleteConfirm'
 import { Link } from 'react-router-dom'
 import { IoMdSearch } from "react-icons/io";
 
+
 export default function GestionUser() {
+  const totalPages = 10; 
+  const perPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
+  const [users, setUsers] = useState([]);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
-  const totalPages = 10; 
+  
+
+    useEffect(() => {
+      console.log(localStorage.getItem('token'))
+      fetch(`http://localhost:5000/users?page=${currentPage}&per_page=${perPage}`, {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+        })
+        
+
+        .then(response => response.json())
+        .then(data => setUsers(data))
+        .catch(error => console.error('Erreur:', error));
+    }, [currentPage]);
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -41,7 +60,7 @@ export default function GestionUser() {
        <Link to="/GestionModirateur"><button className='btn_Bleu' >حسابات المشرفين</button></Link> 
       </div>
     </div>
-        <UsersTable onClick1={toggleDeletePopup} onClick2={togglePopup}/>
+        <UsersTable users={users} onClick1={toggleDeletePopup} onClick2={togglePopup}/>
         <Pagination currentPage={currentPage} 
     totalPages={totalPages} 
     onPageChange={handlePageChange} />

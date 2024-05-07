@@ -1,22 +1,45 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react'; 
+import { useNavigate } from 'react-router-dom';
 
 
-// pour l'integration
+
 export default function LoginForm() {
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState(''); 
-    const handleSubmit = (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
-    
-        // Implement login logic here (e.g., send data to backend for authentication)
-        console.log('Login attempted with username:', username, 'password:', password);
-    
+    const navigate = useNavigate();
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(username);
+        console.log(password);
+        const response = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email: username, password:password }) 
+        });
+      
+        const data = await response.json();
+      
+        if (response.ok) {
+            // Stocker le jeton JWT dans le local storage
+            localStorage.setItem("token", data.token);
+            console.log('Login successful');
+            // Rediriger vers la page GestionUser
+            navigate('/GestionUser');
+          } else {
+            // Gérer les erreurs
+            console.error(data.message);
+          }
+      
         // Clear form fields after submission (optional)
         setUsername('');
         setPassword('');
       };
+      
     return (
         <div className="card border" style={{ border: '2px solid #001F3F' , height : '60vh' , width : "55%" , marginLeft : "22%" , marginTop : "5%", marginBottom : "5%"}}>
         <div className="card-body text-center bg-danger" style={{ width: '40%', height: '70%',marginTop: '5%', marginLeft : '25%' }}>
@@ -26,6 +49,8 @@ export default function LoginForm() {
             <input
             type="text"
             className="form-control"
+            name='email'
+            onChange={(e)=>setUsername(e.target.value)}
             style={{
                 border: '1.5px solid #001F3F',
                 width: '140%',
@@ -43,6 +68,8 @@ export default function LoginForm() {
             <input
             type="password"
             className="form-control"
+            name='password'
+            onChange={(e)=>setPassword(e.target.value)}
             style={{
                 border: '1.5px solid #001F3F',
                 width: '140%',
@@ -89,6 +116,8 @@ export default function LoginForm() {
                     marginTop : "8%",
                     marginLeft : "18%"
                 }}
+                onClick={handleSubmit}
+
             >
                 دخول
             </button>
