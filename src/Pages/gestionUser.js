@@ -10,39 +10,70 @@ import { IoMdSearch } from "react-icons/io";
 
 
 export default function GestionUser() {
-  const totalPages = 10; 
   const perPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [users, setUsers] = useState([]);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
+    const [totalPages, setTotalPages] = useState(0);
 
+
+  const toggleDeletePopup = (userId) => {
+    console.log(`L'icône de la poubelle de l'utilisateur ${userId} a été cliquée.`);
+    setUserIdToDelete(userId);
+    setShowDeletePopup(!showDeletePopup);
+  };
+  
   
 
-    useEffect(() => {
-      console.log(localStorage.getItem('token'))
-      fetch(`http://localhost:5000/users?page=${currentPage}&per_page=${perPage}`, {
-    headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    }
-        })
-        
+  const onConfirm = (userId) => {
+    fetch(`http://localhost:5000/delete_user?id=${userId}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de l\'utilisateur');
+      }
+      // Supprimer l'utilisateur de l'état local
+      setUsers(users.filter(user => user.id !== userId));
+    })
+    .catch(error => console.error('Erreur:', error));    console.log(`L'utilisateur ${userId} a été supprimé.`);
+  };
 
-        .then(response => response.json())
-        .then(data => setUsers(data))
-        .catch(error => console.error('Erreur:', error));
-    }, [currentPage]);
+
+  useEffect(() => {
+    console.log(localStorage.getItem('token'))
+    fetch(`http://localhost:5000/users?page=${currentPage}&per_page=${perPage}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => { 
+      setUsers(data.users);
+      setTotalPages(data.total_pages);
+    })
+    .catch(error => console.error('Erreur:', error));
+  }, [currentPage]);
+  
 
 
+   
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
-  const toggleDeletePopup = () => {
-    setShowDeletePopup(!showDeletePopup); 
-  };
+
+  
+  
+
+
   return (
     <div className='flex flex-row bg-my_whitee h-screen bg-opacity-10'>
        <MenuPrincipal/>
@@ -56,7 +87,6 @@ export default function GestionUser() {
           <input className='w-full text-right font-cairo border-0 bg-transparent outline-none focus:border-0' placeholder='البحث' />
           <IoMdSearch className='text-Deep_Blue' />
         </div>
-        <button className='btn_Bleu' onClick={togglePopup}>اضافة عضو</button> {/* Utilisation de onClick pour définir l'événement de clic */}
        <Link to="/GestionModirateur"><button className='btn_Bleu' >حسابات المشرفين</button></Link> 
       </div>
     </div>
@@ -69,9 +99,11 @@ export default function GestionUser() {
        {showPopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
         <AddUser onClose={togglePopup} /> {/* Passer la fonction togglePopup comme prop onClose */}
       </div>}
-         {showDeletePopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
-        <DeleteConfirm onClose={toggleDeletePopup} /> {/* Passer la fonction togglePopup comme prop onClose */}
-        </div>}    
+      {showDeletePopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
+  <DeleteConfirm onClose={toggleDeletePopup} onConfirm={() => onConfirm(userIdToDelete)} /> {/* Passer la fonction onConfirm comme prop onConfirm */}
+</div>}
+
+          
  
     </div>
   )
