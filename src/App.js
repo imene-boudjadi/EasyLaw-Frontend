@@ -9,6 +9,7 @@ import LawPage from './Pages/lawPage'
 import Jurisprudence from './Pages/jurisprudence'
 import ChatBot from './Pages/chatBot'
 import GestionUser from './Pages/gestionUser'
+import GestionModirateur from './Pages/gestionModirateur'
 import IndexLaw from "./Pages/indexLaw"
 import IndexJurisprudence from "./Pages/indexJurisprudence"
 import GestionOffres from "./Pages/gestionOffres"
@@ -46,6 +47,7 @@ function App() {
           <Route path="/historiquesFact" element={<HistoriquesFacturationPage />} />
           {/* administration pages  */}
           <Route path='/GestionUser' element={<GestionUser/>}/>
+          <Route path='/GestionModirateur' element={<GestionModirateur/>}/>
           <Route path='/ScrapingTextJuridique' element={<ScrapingTextJuridique/>}/>
           <Route path='/IndexLaw' element={<IndexLaw/>}/>
           <Route path='/IndexJurisprudence' element={<IndexJurisprudence/>}/>

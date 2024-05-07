@@ -32,14 +32,14 @@ export default function MenuPrincipal3() {
        
        <Link to="/ScrapingTextJuridique">
        <div className='flex flex-row gap-2 py-4 px-2 border-light_Blue border-t-2 justify-end'>
-          <h1 className='text-light_Blue font-cairo text-xl ' onClick={() => handleColosItemClick()}>تجريف النصوص القانونية</h1>
+          <h1 className='text-light_Blue font-cairo text-xl ' onClick={() => handleColosItemClick()}>تجريف الملفات و الصور </h1>
           <AiOutlineNodeIndex className='text-light_Blue text-right' size={40}/>
         </div>
        </Link>
        
        
         <div className='flex flex-row py-4 px-2 border-light_Blue border-t-2 justify-end'>
-            <h1 className={`py-4 px-2 text-light_Blue border-light_Blue text-right ${selectedItem === 'فهرسة و تصنيف النصوص القانونية ' ? 'text-my_yellow font-bold' : ''}`} onClick={() => handleItemClick('فهرسة و تصنيف النصوص القانونية ')}>فهرسة و تصنيف النصوص القانونية </h1>
+            <h1 className={`py-4 px-2 text-light_Blue border-light_Blue text-right ${selectedItem === 'فهرسة و تصنيف النصوص القانونية ' ? 'text-my_yellow font-bold' : ''}`} onClick={() => handleItemClick('فهرسة و تصنيف النصوص القانونية ')}>تجريف النصوص القانونية </h1>
             <SiAwsorganizations className='text-light_Blue text-right' size={40}/>
         </div>
         {selectedItem === 'فهرسة و تصنيف النصوص القانونية ' && (
@@ -54,11 +54,11 @@ export default function MenuPrincipal3() {
               <h1 className='text-Deep_Blue font-cairo text-right text-xl'>الاجتهادات القضائية</h1>
             </div>
             </Link>
-            <Link to='/IndexNews'>
+            {/* <Link to='/IndexNews'>
             <div className='py-2 px-2 bg-light_Blue border-Deep_Blue border-t-2'>
               <h1 className='text-Deep_Blue font-cairo text-right text-xl'> الاخبار</h1>
             </div>
-            </Link>
+            </Link> */}
           </div>
         )}
         <Link to='/GestionOffres'>
@@ -77,3 +77,57 @@ export default function MenuPrincipal3() {
     </div>
   )
 }
+{/* <img src={Logo} alt='Logo' className='w-12 h-auto md:w-28 self-center' />
+<div className='flex flex-col mt-10'>
+
+<Link to="/GestionUser">
+<div className='flex flex-row gap-2 py-4 px-2 border-light_Blue border-t-2 justify-end'>
+   <h1 className='text-light_Blue font-cairo text-xl ' onClick={() => handleColosItemClick()}>ادارة حساب المستخدمين</h1>
+   <LiaUsersCogSolid className='text-light_Blue' size={30} />
+ </div>
+</Link>
+
+<Link to="/ScrapingTextJuridique">
+<div className='flex flex-row gap-2 py-4 px-2 border-light_Blue border-t-2 justify-end'>
+   <h1 className='text-light_Blue font-cairo text-xl ' onClick={() => handleColosItemClick()}>تجريف النصوص القانونية</h1>
+   <AiOutlineNodeIndex className='text-light_Blue text-right' size={40}/>
+ </div>
+</Link>
+
+
+ <div className='flex flex-row py-4 px-2 border-light_Blue border-t-2 justify-end'>
+     <h1 className={`py-4 px-2 text-light_Blue border-light_Blue text-right ${selectedItem === 'فهرسة و تصنيف النصوص القانونية ' ? 'text-my_yellow font-bold' : ''}`} onClick={() => handleItemClick('فهرسة و تصنيف النصوص القانونية ')}>فهرسة و تصنيف النصوص القانونية </h1>
+     <SiAwsorganizations className='text-light_Blue text-right' size={40}/>
+ </div>
+ {selectedItem === 'فهرسة و تصنيف النصوص القانونية ' && (
+   <div>
+     <Link to='/IndexLaw'>
+     <div className='py-2 px-2 bg-light_Blue border-Deep_Blue  border-t-2'>
+       <h1 className='text-Deep_Blue font-cairo text-right text-xl'>القوانين الاساسية </h1>
+     </div>
+     </Link>
+     <Link to='/IndexJurisprudence'>
+     <div className='py-2 px-2 bg-light_Blue border-Deep_Blue border-t-2'>
+       <h1 className='text-Deep_Blue font-cairo text-right text-xl'>الاجتهادات القضائية</h1>
+     </div>
+     </Link>
+     <Link to='/IndexNews'>
+     <div className='py-2 px-2 bg-light_Blue border-Deep_Blue border-t-2'>
+       <h1 className='text-Deep_Blue font-cairo text-right text-xl'> الاخبار</h1>
+     </div>
+     </Link>
+   </div>
+ )}
+ <Link to='/GestionOffres'>
+  <div className='flex flex-row gap-2 py-4 px-2 border-light_Blue border-t-2 justify-end'>
+     <h1 className='text-light_Blue font-cairo text-right text-xl' onClick={() => handleColosItemClick()}>ادارة العروض  </h1>
+     <MdOutlinePriceChange className='text-light_Blue text-right' size={40}/>
+ </div>
+ </Link>
+</div>
+<Link to='/'>
+<div className='flex flex-row gap-2 py-4 px-2 border-light_Blue border-y-2 justify-end'>
+     <h1 className='text-light_Blue font-cairo text-right text-xl'>الخروج</h1>
+     <IoIosLogOut className='text-light_Blue text-right' size={40} />
+ </div>
+ </Link> */}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { RiDeleteBin4Line } from "react-icons/ri";
+import { MdAppRegistration } from "react-icons/md";
 
 export default function UsersTable({onClick1 ,onClick2 }) {
   return (
@@ -19,8 +20,9 @@ export default function UsersTable({onClick1 ,onClick2 }) {
     <tr key={index} className='border-2 border-light_Blue p-4 '>
       <td className='py-2 flex flex-row justify-center'>
         <RiDeleteBin4Line onClick={onClick1} size={25} className='text-my_Red' />
+        <MdAppRegistration onClick={onClick2} size={25} className='text-Deep_Blue'/>
       </td>
-      <td className='py-2'> مستخدم </td>
+      <td className='py-2'> مشرف </td>
       <td className='py-2'> 0793921328 </td>
       <td className='py-2'>kz_abbaci@esi.dz</td>
       <td className='py-2'>عباسي زوليخة </td>

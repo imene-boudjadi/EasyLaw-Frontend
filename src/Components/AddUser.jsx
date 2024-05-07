@@ -12,15 +12,16 @@ export default function AddUser({ onClose }) {
           <input className='inputStyle w-full px-2 py-1'/>
         </div>
         <div className='flex flex-col mb-3'>
-          <label className='text-right text-Deep_Blue font-cairo'>:البريد الالكتروني</label>
-          <input className='inputStyle w-full px-2 py-1'/>
-        </div>
-        <div className='flex flex-col mb-3'>
           <label className='text-right text-Deep_Blue font-cairo'>:الرقم السري</label>
           <input className='inputStyle w-full px-2 py-1'/>
         </div>
         <div className='flex flex-col mb-3'>
-          <label className='text-right text-Deep_Blue font-cairo'>:تاكيد الرقم السري</label>
+          <label className='text-right text-Deep_Blue font-cairo'>:البريد الالكتروني</label>
+          <input className='inputStyle w-full px-2 py-1'/>
+        </div>
+        
+        <div className='flex flex-col mb-3'>
+          <label className='text-right text-Deep_Blue font-cairo'>:رقم الهاتف</label>
           <input className='inputStyle w-full px-2 py-1'/>
         </div>
           <div className='flex flex-col mb-3'>

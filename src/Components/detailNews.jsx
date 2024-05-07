@@ -1,26 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-export default function detailNews() {
-  return (
-    <div className="flex flex-col my-10 mx-10">
-    <div className="flex flex-col md:flex-row">
-      <div className="flex flex-col w-full md:w-1/2  pt-5">
-        <h2 className="font-bold text-xl mb-2 text-right text-Deep_Blue">استحداث مديرية للرياضة المدرسية بوزارة التربية الوطنية</h2>
-        <p className="text-sm mb-2 text-right text-light_Blue">أدرج يـوم : الأربعاء, 28 فيفري 2024 08:26</p>
-        <p className="text-sm text-right text-Deep_Blue">الجزائر - صدر في العدد الأخير من الجريدة الرسمية المرسوم التنفيذي المتضمن تنظيم الإدارة المركزية لوزارة التربية الوطنية، والذي تم بموجبه استحداث مديرية للرياضة المدرسية تتولى تنفيذ الاستراتيجية الوطنية لترقية هذا النوع من الرياضات، تجسيدا لتعليمات رئيس الجمهورية، السيد عبد المجيد تبون.</p>
-      </div>
-      <div className="flex flex-row w-full md:w-1/2 justify-center">
-        <img src="https://www.aps.dz/ar/media/k2/items/cache/aeffe453800c18d50fe8692781885c02_M.jpg" alt="Description de l'image" className="w-2/3 h-auto" />
-      </div>
-    </div>
+export default function DetailNews() {
+    const [newsDetail, setNewsDetail] = useState();
+    const { idNews } = useParams(); // Utilisation correcte de useParams
 
-    <div className="my-4">
-      <p className="text-lg text-right text-Dark_Blue">وينص المرسوم على أن مديرية الرياضة المدرسية تكلف بتنفيذ الاستراتيجية الوطنية لتطوير الرياضة المدرسية وتدعميها على مستوى مؤسسات التربية والتعليم بالتنسيق مع القطاعات المعنية.
-      كما تتولى مهمة إعداد برنامج لاكتشاف المواهب الرياضية في الوسط المدرسي ومرافقتها مع السهر على تنظيم مختلف المنافسات الرياضية المدرسية والحرص على المشاركة في المنافسات الرياضية المدرسية الدولية.
-      وفي نفس السياق، تقوم المديرية المذكورة بالمبادرة بكل دراسة تتعلق بتطوير الرياضة المدرسية بإشراك مختلف الفاعلين في المجال الرياضي.
-      وتضم مديريتين فرعيتين، تعنى الأولى بالأنشطة الرياضية في الوسط المدرسي، حيث تكلف بجملة من المهام منها ترقية وتعميم ممارسة النشاط الرياضي المدرسي وتطويره وكذا متابعة إنشاء النوادي الرياضية المدرسية و تجهيزها، علاوة على إعداد مخطط لتطوير الرياضة لفائدة التلاميذ ذوي الاحتياجات الخاصة وتنفيذه.
-      أما المديرية الفرعية الثانية فتعنى بالمواهب الرياضية المدرسية من خلال العمل على اكتشاف وتنظيم وتدعيم هذه المواهب ومرافقته</p>
-    </div>
-  </div>
-  )
+    useEffect(() => {
+      console.log(idNews);
+      fetch(`http://localhost:8000/news/${idNews}`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => setNewsDetail(data))
+      .catch(error => console.error('Error fetching news detail:', error));
+  
+    }, [idNews]);
+
+    if (!newsDetail) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div className="flex flex-col my-10 mx-10">
+            <div className="flex flex-col md:flex-row">
+                <div className="flex flex-col w-full md:w-1/2 pt-5">
+                    <h2 className="font-bold text-xl mb-2 text-right text-Deep_Blue">{newsDetail.title}</h2>
+                    <p className="text-sm mb-2 text-right text-light_Blue">{newsDetail.date}</p>
+                    <p className="text-sm text-right text-Deep_Blue">{newsDetail.resumer}</p>
+                </div>
+                <div className="flex flex-row w-full md:w-1/2 justify-center">
+                    <img src={newsDetail.image} alt="Description de l'image" className="w-2/3 h-auto" />
+                </div>
+            </div>
+
+            <div className="my-4">
+                <p className="text-lg text-right text-Dark_Blue">{newsDetail.detail}</p>
+            </div>
+        </div>
+    );
 }

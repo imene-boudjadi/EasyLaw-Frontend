@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../Components/header'
 import MenuPrincipal from '../Components/menuPrncipale'
-import Footer from '../Components/footer'
+import Footer from '../Components/footer' 
 import DetailsFacture from '../Components/detailsFacture'
 export default function detailFacture() {
     

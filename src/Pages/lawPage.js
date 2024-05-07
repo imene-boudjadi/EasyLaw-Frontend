@@ -6,19 +6,13 @@ import LawList from '../Components/lawList';
 import FilterLaw from '../Components/filterLaw';
 
 export default function LawPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleSearchTermChange = (value) => {
-    setSearchTerm(value);
-    console.log("hiii"+searchTerm)
-  };
-
+  
   return (
     <div>
       <Header />
-      <MenuPrincipal2 />
-      <FilterLaw onSearchTermChange={handleSearchTermChange} />
-      <LawList searchTerm={searchTerm} /> 
+      <MenuPrincipal2 /> 
+      {/* <FilterLaw  /> */}
+      <LawList /> 
       <Footer /> 
     </div>
   );
