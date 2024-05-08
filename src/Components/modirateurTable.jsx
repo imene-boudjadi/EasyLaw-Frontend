@@ -20,7 +20,7 @@ export default function UsersTable({moderators, onClick1, onClick2}) {
             <tr key={index} className='border-2 border-light_Blue p-4 '>
               <td className='py-2 flex flex-row justify-center'>
                 <RiDeleteBin4Line onClick={() => onClick1(moderator.id)} size={25} className='text-my_Red' />
-                <MdAppRegistration onClick={() => onClick2(moderator.id)} size={25} className='text-Deep_Blue'/>
+                <MdAppRegistration onClick={() => onClick1(moderator.id)} size={25} className='text-Deep_Blue'/>
               </td>
               <td className='py-2'>مشرف</td>
               <td className='py-2'>{moderator.phoneNumber}</td>

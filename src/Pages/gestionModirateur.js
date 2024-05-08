@@ -13,6 +13,32 @@ export default function GestionModirateur() {
   const [showPopup, setShowPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [moderators, setmoderators] = useState([]);
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
+
+
+  const toggleDeletePopup = (userId) => {
+    console.log(`L'icône de la poubelle de l'utilisateur ${userId} a été cliquée.`);
+    setUserIdToDelete(userId);
+    setShowDeletePopup(!showDeletePopup);
+  };
+
+
+  const onConfirm = (userId) => {
+    fetch(`http://localhost:5000/delete_user?id=${userId}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression du moderateur');
+      }
+      // Supprimer l'utilisateur de l'état local
+      setmoderators(moderators.filter(moderator => moderator.id !== userId));
+    })
+    .catch(error => console.error('Erreur:', error));    console.log(`L'utilisateur ${userId} a été supprimé.`);
+  };
 
 
    
@@ -39,9 +65,7 @@ export default function GestionModirateur() {
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
-  const toggleDeletePopup = () => {
-    setShowDeletePopup(!showDeletePopup); 
-  };
+  
   return (
     <div className='flex flex-row bg-my_whitee h-screen bg-opacity-10'>
        <MenuPrincipal/>
@@ -66,7 +90,7 @@ export default function GestionModirateur() {
         <AddUser onClose={togglePopup} /> {/* Passer la fonction togglePopup comme prop onClose */}
       </div>}
          {showDeletePopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
-        <DeleteConfirm onClose={toggleDeletePopup} /> {/* Passer la fonction togglePopup comme prop onClose */}
+        <DeleteConfirm onClose={toggleDeletePopup} onConfirm={() => onConfirm(userIdToDelete)}  /> {/* Passer la fonction togglePopup comme prop onClose */}
         </div>}    
  
     </div>
