@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import MenuPrincipal from '../Components/menuPrincipal3'
 import Header2 from '../Components/header2'
 import ModirateurTable from '../Components/modirateurTable'
@@ -12,8 +12,26 @@ export default function GestionModirateur() {
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [moderators, setmoderators] = useState([]);
 
-  const totalPages = 10; 
+
+   
+
+  useEffect(() => {
+    console.log(localStorage.getItem('token'))
+    fetch(`http://localhost:5000/moderators`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => { 
+      setmoderators(data);
+    })
+    .catch(error => console.error('Erreur:', error));
+  }, [currentPage]);
+
+
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -40,10 +58,8 @@ export default function GestionModirateur() {
       </div>
     </div>
        
-        <ModirateurTable onClick1={toggleDeletePopup} onClick2={togglePopup}/>
-        <Pagination currentPage={currentPage} 
-    totalPages={totalPages} 
-    onPageChange={handlePageChange} />
+        <ModirateurTable moderators={moderators} onClick1={toggleDeletePopup} onClick2={togglePopup}/>
+       
        </div>
 
        {showPopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
