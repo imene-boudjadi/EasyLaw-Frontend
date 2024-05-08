@@ -1,60 +1,40 @@
-import React, { useState } from 'react';  // Ajoutez useState
+import React, { useState, useEffect } from 'react';
 import { MdCancelPresentation } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
 
-export default function AddUser({ onClose }) {
-  // Ajoutez un état pour chaque champ du formulaire
+export default function UpdateModerator({ id, onClose }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [niveau, setNiveau] = useState(2);
-  const [role, setRole] = useState('moderateur');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
-  const [deleted, setDeleted] = useState(false);
-  const navigate = useNavigate();
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/get_moderator_by_id?id=${id}`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => { 
+      setUsername(data.userName);
+      setEmail(data.Email);
+      setPhoneNumber(data.phoneNumber);
+    })
+    .catch(error => console.error('Erreur:', error));
+  }, [id]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-
-    const data = {
-      username: username,
-      password: password,
-      niveau: 2,
-      role: "moderateur",
-      phoneNumber: phoneNumber,
-      email: email,
-      deleted: false
-    };
-  
-    fetch('http://localhost:5000/add_moderator', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'ajout du modérateur');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Le modérateur a été ajouté avec succès :', data);
-      navigate('/GestionUser');
-    })
-    .catch(error => {
-      console.error('Erreur:', error);
-    });
+    console.log({ username, password, email, phoneNumber });
   };
+
   
+
+
 
   return (
     <form onSubmit={handleSubmit} className='flex flex-col items-center w-auto md:w-1/4 px-5 py-5 bg-my_whitee rounded-md shadow-md border-2 border-Deep_Blue'>
       <MdCancelPresentation className='text-Deep_Blue self-end cursor-pointer' onClick={onClose} />
-      <h1 className='text-2xl font-cairo font-bold text-Deep_Blue mb-5'>اضافة  مشرفم </h1>
+      <h1 className='text-2xl font-cairo font-bold text-Deep_Blue mb-5'>تعديل مشرف </h1>
       <div className='flex flex-col'>
         <div className='flex flex-col mb-3'>
           <label className='text-right text-Deep_Blue font-cairo'>:اسم المستخدم</label>
@@ -76,4 +56,4 @@ export default function AddUser({ onClose }) {
       </div>
     </form>
   )
-}
+  }

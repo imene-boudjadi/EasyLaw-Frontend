@@ -5,6 +5,8 @@ import ModirateurTable from '../Components/modirateurTable'
 import Pagination from '../Components/Pagination'
 import AddUser from '../Components/AddUser'
 import DeleteConfirm from '../Components/DeleteConfirm'
+import UpdateModerator from '../Components/UpdateModerator'
+
 import { IoMdSearch } from "react-icons/io";
 import { Link } from 'react-router-dom'
 
@@ -14,7 +16,14 @@ export default function GestionModirateur() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [moderators, setmoderators] = useState([]);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [moderatorIdToUpdate, setModeratorIdToUpdate] = useState(null);
 
+  const handleUpdateForm = (id) => {
+    setModeratorIdToUpdate(id);
+    setShowUpdateForm(true);
+  };
+  
 
   const toggleDeletePopup = (userId) => {
     console.log(`L'icône de la poubelle de l'utilisateur ${userId} a été cliquée.`);
@@ -77,17 +86,19 @@ export default function GestionModirateur() {
           <input className='w-full text-right font-cairo border-0 bg-transparent outline-none focus:border-0' placeholder='البحث' />
           <IoMdSearch className='text-Deep_Blue' />
         </div>
-        <button className='btn_Bleu' onClick={togglePopup}>اضافة عضو</button> {/* Utilisation de onClick pour définir l'événement de clic */}
+        <button className='btn_Bleu' onClick={togglePopup}>اضافة لمشرفو</button> {/* Utilisation de onClick pour définir l'événement de clic */}
         <Link to="/GestionUser"><button className='btn_Bleu' >حسابات المستخدمين</button></Link> 
       </div>
     </div>
        
-        <ModirateurTable moderators={moderators} onClick1={toggleDeletePopup} onClick2={togglePopup}/>
+        <ModirateurTable moderators={moderators} onClick1={toggleDeletePopup} onClick2={handleUpdateForm}/>
        
        </div>
-
        {showPopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
-        <AddUser onClose={togglePopup} /> {/* Passer la fonction togglePopup comme prop onClose */}
+  <AddUser  onClose={togglePopup} /> </div> }
+       {showUpdateForm && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
+  <UpdateModerator id={moderatorIdToUpdate} onClose={() => setShowUpdateForm(false)} />
+
       </div>}
          {showDeletePopup && <div className="fixed inset-0 flex items-center justify-center bg-light_Blue bg-opacity-50">
         <DeleteConfirm onClose={toggleDeletePopup} onConfirm={() => onConfirm(userIdToDelete)}  /> {/* Passer la fonction togglePopup comme prop onClose */}
