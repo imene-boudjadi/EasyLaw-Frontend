@@ -22,18 +22,22 @@ export default function LoginForm() {
           body: JSON.stringify({ email: username, password:password }) 
         });
       
-        const data = await response.json();
+        if (!response.ok) {
+          console.error('Erreur lors de la connexion');
+          return;
+        }
       
-        if (response.ok) {
-            // Stocker le jeton JWT dans le local storage
-            localStorage.setItem("token", data.token);
-            console.log('Login successful');
-            // Rediriger vers la page GestionUser
-            navigate('/GestionUser');
-          } else {
-            // Gérer les erreurs
-            console.error(data.message);
-          }
+        const data = await response.json();
+        if (data.message === 'Token is invalid') {
+          // Rediriger vers une autre page si le token est invalide
+          navigate('/login');
+        } else {
+          // Stocker le jeton JWT dans le local storage
+          localStorage.setItem("token", data.token);
+          console.log('Login successful');
+          // Rediriger vers la page GestionUser
+          navigate('/GestionUser');
+        }
       
         // Clear form fields after submission (optional)
         setUsername('');

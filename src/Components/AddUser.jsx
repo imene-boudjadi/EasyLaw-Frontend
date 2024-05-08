@@ -16,7 +16,6 @@ export default function AddUser({ onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-
     const data = {
       username: username,
       password: password,
@@ -35,15 +34,15 @@ export default function AddUser({ onClose }) {
       },
       body: JSON.stringify(data)
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Erreur lors de l\'ajout du modérateur');
-      }
-      return response.json();
-    })
+    .then(response => response.json()) // Convertir la réponse en JSON
     .then(data => {
-      console.log('Le modérateur a été ajouté avec succès :', data);
-      navigate('/GestionUser');
+      if (data.message === 'Token is invalid') {
+        // Rediriger vers une autre page si le token est invalide
+        navigate('/login');
+      } else {
+        console.log('Le modérateur a été ajouté avec succès :', data);
+        navigate('/GestionUser');
+      }
     })
     .catch(error => {
       console.error('Erreur:', error);

@@ -9,6 +9,8 @@ import UpdateModerator from '../Components/UpdateModerator'
 
 import { IoMdSearch } from "react-icons/io";
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+
 
 export default function GestionModirateur() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,12 +20,14 @@ export default function GestionModirateur() {
   const [userIdToDelete, setUserIdToDelete] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [moderatorIdToUpdate, setModeratorIdToUpdate] = useState(null);
+  const navigate = useNavigate();
 
   const handleUpdateForm = (id) => {
     setModeratorIdToUpdate(id);
     setShowUpdateForm(true);
-  };
   
+  };
+ 
 
   const toggleDeletePopup = (userId) => {
     console.log(`L'icône de la poubelle de l'utilisateur ${userId} a été cliquée.`);
@@ -34,19 +38,25 @@ export default function GestionModirateur() {
 
   const onConfirm = (userId) => {
     fetch(`http://localhost:5000/delete_user?id=${userId}`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Erreur lors de la suppression du moderateur');
-      }
-      // Supprimer l'utilisateur de l'état local
-      setmoderators(moderators.filter(moderator => moderator.id !== userId));
-    })
-    .catch(error => console.error('Erreur:', error));    console.log(`L'utilisateur ${userId} a été supprimé.`);
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  }
+})
+.then(response => response.json()) // Convertir la réponse en JSON
+.then(data => {
+  if (data.message === 'Token is invalid'||localStorage.getItem('token')==null) {
+    // Rediriger vers une autre page si le token est invalide
+    navigate('/login');
+  } else {
+    // Supprimer l'utilisateur de l'état local
+    setmoderators(moderators.filter(moderator => moderator.id !== userId));
+    console.log(`L'utilisateur ${userId} a été supprimé.`);
+  }
+})
+.catch(error => console.error('Erreur:', error));
+
+  
   };
 
 
@@ -61,6 +71,10 @@ export default function GestionModirateur() {
     })
     .then(response => response.json())
     .then(data => { 
+      if (data.message === 'Token is invalid' ||localStorage.getItem('token')==null ) {
+        // Rediriger vers une autre page si le token est invalide
+        navigate('/login');
+      }
       setmoderators(data);
     })
     .catch(error => console.error('Erreur:', error));

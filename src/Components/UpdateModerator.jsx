@@ -1,30 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { MdCancelPresentation } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function UpdateModerator({ id, onClose }) {
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
+    
     fetch(`http://localhost:5000/get_moderator_by_id?id=${id}`, {
+        method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     })
     .then(response => response.json())
     .then(data => { 
-      setUsername(data.userName);
-      setEmail(data.Email);
-      setPhoneNumber(data.phoneNumber);
+        if (data.message === 'Token is invalid'||localStorage.getItem('token')==null) {
+            // Rediriger vers une autre page si le token est invalide
+            navigate('/autrePage');
+        }
+      setUsername(data.user.userName);
+      setEmail(data.user.Email);
+      setPhoneNumber(data.user.phoneNumber);
     })
     .catch(error => console.error('Erreur:', error));
   }, [id]);
 
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ username, password, email, phoneNumber });
+    
+
+    const data = {
+        id:id,
+      username: username,
+      
+      niveau: 2,
+      role: "moderateur",
+      phoneNumber: phoneNumber,
+      email: email,
+      deleted: false
+    };
+  
+        fetch('http://localhost:5000/update_moderator', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json()) // Convertir la réponse en JSON
+    .then(data => {
+    if (data.message === 'Token is invalid'||localStorage.getItem('token')==null) {
+        // Rediriger vers une autre page si le token est invalide
+        navigate('/autrePage');
+    } else {
+        console.log('Le modérateur a été modifié avec succès :', data);
+        navigate('/GestionUser');
+    }
+    })
+    .catch(error => {
+    console.error('Erreur:', error);
+    });
+
   };
 
   
@@ -40,10 +83,7 @@ export default function UpdateModerator({ id, onClose }) {
           <label className='text-right text-Deep_Blue font-cairo'>:اسم المستخدم</label>
           <input value={username} onChange={e => setUsername(e.target.value)} className='inputStyle w-full px-2 py-1'/>
         </div>
-        <div className='flex flex-col mb-3'>
-          <label className='text-right text-Deep_Blue font-cairo'>:كلمة السر</label>
-          <input value={password} onChange={e => setPassword(e.target.value)} className='inputStyle w-full px-2 py-1'/>
-        </div>
+    
         <div className='flex flex-col mb-3'>
           <label className='text-right text-Deep_Blue font-cairo'>:البريد الالكتروني</label>
           <input value={email} onChange={e => setEmail(e.target.value)} className='inputStyle w-full px-2 py-1'/>
